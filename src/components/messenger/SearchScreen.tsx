@@ -11,10 +11,11 @@ interface SearchScreenProps {
 export default function SearchScreen({ allUsers, onStartChat }: SearchScreenProps) {
   const [query, setQuery] = useState('');
 
-  const results = query.length >= 2
+  const cleanQuery = query.startsWith('@') ? query.slice(1) : query;
+  const results = cleanQuery.length >= 1
     ? allUsers.filter(u =>
-        u.username.toLowerCase().includes(query.toLowerCase()) ||
-        u.displayName.toLowerCase().includes(query.toLowerCase())
+        u.username.toLowerCase().includes(cleanQuery.toLowerCase()) ||
+        u.displayName.toLowerCase().includes(cleanQuery.toLowerCase())
       )
     : [];
 
@@ -43,13 +44,7 @@ export default function SearchScreen({ allUsers, onStartChat }: SearchScreenProp
         </div>
       </div>
 
-      {query.length > 0 && query.length < 2 && (
-        <div className="px-4 text-center py-8">
-          <p className="text-muted-foreground text-sm">Введите минимум 2 символа</p>
-        </div>
-      )}
-
-      {query.length >= 2 && results.length === 0 && (
+      {cleanQuery.length >= 1 && results.length === 0 && (
         <div className="px-4 text-center py-12">
           <div className="text-4xl mb-3">🔍</div>
           <p className="font-semibold">Никого не нашли</p>

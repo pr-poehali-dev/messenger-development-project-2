@@ -19,6 +19,10 @@ export interface Message {
   timestamp: string;
   isOwn: boolean;
   status: 'sent' | 'delivered' | 'read';
+  mediaType?: 'image' | 'audio';
+  mediaUrl?: string;
+  mediaName?: string;
+  mediaDuration?: string;
 }
 
 export interface Chat {
