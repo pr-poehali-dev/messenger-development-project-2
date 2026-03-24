@@ -4,6 +4,7 @@ import { mockChats, mockUsers, mockNotifications, currentUser as defaultUser } f
 import AuthScreen from './AuthScreen';
 import ChatsScreen from './ChatsScreen';
 import ChatView from './ChatView';
+import CallScreen from './CallScreen';
 import ContactsScreen from './ContactsScreen';
 import SearchScreen from './SearchScreen';
 import NotificationsScreen from './NotificationsScreen';
@@ -20,6 +21,7 @@ export default function Messenger() {
   const [chats, setChats] = useState<Chat[]>(mockChats);
   const [activeChat, setActiveChat] = useState<Chat | null>(null);
   const [showProfile, setShowProfile] = useState(false);
+  const [activeCall, setActiveCall] = useState<{ user: User; type: 'audio' | 'video' } | null>(null);
 
   const handleAuth = (username: string, displayName: string) => {
     setCurrentUser(u => ({ ...u, username, displayName }));
@@ -114,6 +116,15 @@ export default function Messenger() {
         </div>
       )}
 
+      {/* Call screen */}
+      {activeCall && (
+        <CallScreen
+          user={activeCall.user}
+          type={activeCall.type}
+          onEnd={() => setActiveCall(null)}
+        />
+      )}
+
       {/* Chat view */}
       {activeChat && !showProfile && (
         <div className="flex-1 flex flex-col overflow-hidden animate-fade-in relative z-10">
@@ -121,6 +132,7 @@ export default function Messenger() {
             chat={activeChat}
             onBack={() => setActiveChat(null)}
             onUpdateChat={handleUpdateChat}
+            onCall={(type) => setActiveCall({ user: activeChat.user, type })}
           />
         </div>
       )}

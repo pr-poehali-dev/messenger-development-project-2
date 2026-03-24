@@ -7,9 +7,10 @@ interface ChatViewProps {
   chat: Chat;
   onBack: () => void;
   onUpdateChat: (chatId: string, messages: Message[]) => void;
+  onCall: (type: 'audio' | 'video') => void;
 }
 
-export default function ChatView({ chat, onBack, onUpdateChat }: ChatViewProps) {
+export default function ChatView({ chat, onBack, onUpdateChat, onCall }: ChatViewProps) {
   const [messages, setMessages] = useState<Message[]>(chat.messages);
   const [text, setText] = useState('');
   const [recording, setRecording] = useState(false);
@@ -136,10 +137,10 @@ export default function ChatView({ chat, onBack, onUpdateChat }: ChatViewProps) 
             {chat.user.online ? <span className="text-green-400">в сети</span> : chat.user.lastSeen}
           </p>
         </div>
-        <button className="text-muted-foreground hover:text-foreground transition-colors p-2">
+        <button onClick={() => onCall('audio')} className="text-muted-foreground hover:text-foreground transition-colors p-2">
           <Icon name="Phone" size={18} />
         </button>
-        <button className="text-muted-foreground hover:text-foreground transition-colors p-2">
+        <button onClick={() => onCall('video')} className="text-muted-foreground hover:text-foreground transition-colors p-2">
           <Icon name="Video" size={18} />
         </button>
       </div>
