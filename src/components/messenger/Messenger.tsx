@@ -24,6 +24,7 @@ export default function Messenger() {
   const handleAuth = (username: string, displayName: string) => {
     setCurrentUser(u => ({ ...u, username, displayName }));
     setAuthed(true);
+    setScreen('chats');
   };
 
   const handleLogout = () => {
@@ -139,7 +140,7 @@ export default function Messenger() {
           {screen === 'notifications' && (
             <NotificationsScreen notifications={mockNotifications} />
           )}
-          {screen === 'settings' && <SettingsScreen />}
+          {screen === 'settings' && <SettingsScreen user={currentUser} onLogout={handleLogout} />}
         </div>
       )}
 
