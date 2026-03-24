@@ -153,8 +153,9 @@ export default function AuthScreen({ onAuth }: AuthScreenProps) {
                       className="w-full glass rounded-2xl px-4 py-3 text-sm outline-none placeholder:text-muted-foreground/50 focus:border-primary/50 border border-transparent transition-all"
                       placeholder="+7 (999) 000-00-00"
                       type="tel"
+                      inputMode="numeric"
                       value={form.phone}
-                      onChange={e => update('phone', e.target.value)}
+                      onChange={e => update('phone', e.target.value.replace(/[^0-9+\-() ]/g, ''))}
                     />
                   )}
                 </div>

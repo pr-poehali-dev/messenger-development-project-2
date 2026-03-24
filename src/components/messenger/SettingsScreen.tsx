@@ -87,10 +87,10 @@ export default function SettingsScreen() {
                   </div>
                   {item.type === 'toggle' && item.key && (
                     <button
-                      onClick={() => toggle(item.key!)}
-                      className={`relative w-11 h-6 rounded-full transition-all flex-shrink-0 ${settings[item.key] ? 'gradient-bg' : 'bg-border'}`}
+                      onClick={(e) => { e.stopPropagation(); toggle(item.key!); }}
+                      className={`relative w-11 h-6 rounded-full transition-all flex-shrink-0 ${settings[item.key!] ? 'gradient-bg' : 'bg-border'}`}
                     >
-                      <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all shadow-sm ${settings[item.key] ? 'left-[22px]' : 'left-0.5'}`} />
+                      <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all shadow-sm ${settings[item.key!] ? 'left-[22px]' : 'left-0.5'}`} />
                     </button>
                   )}
                   {item.type === 'link' && (
